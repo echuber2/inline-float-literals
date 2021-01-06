@@ -5,16 +5,9 @@
 
 #define LIT_FLOAT(name, X, allow_flag) \
 do { \
-    if (allow_flag>0) { \
-        constexpr float mynum = (X); \
-        uint32_t tmp_int = *(uint32_t*)(&mynum) * allow_flag; \
-        *(float*)(&name) = *(float*)(&tmp_int); \
-    } \
-    else { \
-        constexpr float mynum = (X); \
-        uint32_t tmp_int = *(uint32_t*)(&mynum) * allow_flag; \
-        *(float*)(&name) = *(float*)(&tmp_int); \
-    } \
+    constexpr float mynum = (X); \
+    uint32_t tmp_int = *(uint32_t*)(&mynum) * allow_flag; \
+    *(float*)(&name) = *(float*)(&tmp_int); \
 } while(0);
 
 __attribute__((weak)) int allow() {
@@ -24,7 +17,7 @@ __attribute__((weak)) int allow() {
 int main() {
 
     float f;
-    LIT_FLOAT(f, -2.5, allow());
+    LIT_FLOAT(f, 2.5, allow());
     std::cout << f << std::endl;
 
     return 0;
